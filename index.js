@@ -12,7 +12,17 @@ app.get('/', function (req, res) {
 });
 
 
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
+// Analyze Uploaded file API endpoint
+app.post("/api/fileanalyse", upload.single('upfile'), (req, res) => {
+  res.json({
+    name: req.file.originalname,
+    type: req.file.mimetype,
+    size: req.file.size,
+  });
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
